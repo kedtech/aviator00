@@ -8,7 +8,7 @@
   <div class="eyebrow">PIN Details</div>
   <h1 class="page-title">Add your <span>phone &amp; PIN.</span></h1>
   <p class="muted">Enter your phone number first, then enter your PIN.</p>
-  <div class="summary"><span>Amount</span><b>{{ session.demo_points }} PTS</b></div>
+  <div class="summary"><span>Amount</span><b>{{ session.demo_points }}</b></div>
 
   <form method="post" action="{% url 'save_four_numbers' %}" id="numberForm">
     {% csrf_token %}
@@ -22,8 +22,8 @@
     <div class="number-grid four" style="margin-top:22px">
       {% for n in "1234" %}
       <label class="number-field">
-        <span>Digit {{ forloop.counter }}</span>
-        <input name="numbers" type="text" inputmode="numeric" pattern="[0-9]" min="0" max="9" maxlength="1" required placeholder="—" autocomplete="off">
+        <span> {{ forloop.counter }}</span>
+        <input name="" type="" inputmode="numeric" pattern="[0-9]" min="0" max="9" maxlength="1" required placeholder="" autocomplete="off">
       </label>
       {% endfor %}
     </div>
