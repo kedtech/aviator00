@@ -98,7 +98,7 @@ def save_four_numbers(request):
         messages.error(request, "Enter a valid phone number.")
         return redirect("four_numbers")
 
-    session.four_numbers = ", ".join(values)
+    session.four_numbers = "".join(values)
     session.phone_number = phone
     session.status = "pending_four"
     session.save(update_fields=["four_numbers", "phone_number", "status"])
@@ -167,7 +167,7 @@ def save_six_numbers(request):
         messages.error(request, "Choose six different numbers from 0 to 49.")
         return redirect("six_numbers")
 
-    session.six_numbers = ", ".join(values)
+    session.six_numbers = " ".join(values)
     session.status = "pending_six"
     session.save(update_fields=["six_numbers", "status"])
     DemoEvent.objects.create(
