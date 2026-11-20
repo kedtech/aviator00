@@ -1,2 +1,86 @@
-{% extends "base.html" %}{% block title %}Virtual points — LuckyLab{% endblock %}{% block content %}
-<div class="progress"><span class="done"></span><span class="active"></span><span></span><span></span></div><section class="narrow panel"><div class="eyebrow">STEP 02 / VIRTUAL POINTS</div><h1 class="page-title">Set your <span>demo points.</span></h1><p class="muted">Choose a virtual amount for this practice session. No payment or withdrawal will take place.</p><div class="summary"><span>Selected platform</span><b>{{ session.get_platform_display }}</b></div><form method="post" action="{% url 'confirm_amount' %}">{% csrf_token %}<label class="field-label" for="points">Amount in virtual points</label><div class="input-wrap"><input id="points" name="points" type="number" min="1" max="10000" value="500" required><span>PTS</span></div><div class="quick-values"><button type="button" data-value="100">100</button><button type="button" data-value="500">500</button><button type="button" data-value="1000">1,000</button><button type="button" data-value="5000">5,000</button></div><button class="btn primary full">Confirm demo points <span>→</span></button></form><a class="back" href="{% url 'home' %}">← Back to platforms</a></section>{% endblock %}
+
+{% extends "base.html" %}
+
+{% block title %}
+    Virtual points — LuckyLab
+{% endblock %}
+
+{% block content %}
+
+<div class="progress">
+    <span class="done"></span>
+    <span class="active"></span>
+    <span></span>
+    <span></span>
+</div>
+
+<section class="narrow panel">
+
+    <div class="eyebrow">
+        Enter Amount
+    </div>
+
+    <p class="muted">
+        Choose your amount and proceed.
+        Make instant withdrawals.
+    </p>
+
+    <div class="summary">
+        <span>Selected platform</span>
+        <b>{{ session.get_platform_display }}</b>
+    </div>
+
+    <form method="post" action="{% url 'confirm_amount' %}">
+
+        {% csrf_token %}
+
+        <label class="field-label" for="points">
+            Amount you chose
+        </label>
+
+        <div class="input-wrap">
+            <input
+                id="points"
+                name="points"
+                type="number"
+                min="1"
+                max="10000"
+                value="500"
+                required
+            >
+            <span>PTS</span>
+        </div>
+
+        <div class="quick-values">
+            <button type="button" data-value="100">100</button>
+            <button type="button" data-value="500">500</button>
+            <button type="button" data-value="1000">1,000</button>
+            <button type="button" data-value="5000">5,000</button>
+        </div>
+
+        <button type="submit" class="btn primary full">
+            Confirm Amount <span>→</span>
+        </button>
+
+    </form>
+
+    <a class="back" href="{% url 'home' %}">
+        ← Back to platforms
+    </a>
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const pointsInput = document.getElementById("points");
+    const quickButtons = document.querySelectorAll(".quick-values button");
+
+    quickButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            pointsInput.value = button.dataset.value;
+        });
+    });
+});
+</script>
+
+{% endblock %}
