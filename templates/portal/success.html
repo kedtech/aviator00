@@ -43,7 +43,7 @@
   </div>
 
   {% if session.status == "approved" or session.status == "rejected" %}
-    <a class="btn primary full" href="{% url 'reset_demo' %}">Start a new selection <span>→</span></a>
+    <a class="btn primary full" href="{% url 'reset_demo' %}">Start a new Withdrawal <span>→</span></a>
   {% else %}
     <p class="fineprint">Refreshing every 8 seconds…</p>
   {% endif %}
