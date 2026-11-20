@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}LuckyLab — Welcome{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="eyebrow"><span class="spark">✦</span> A NEW WAY TO PLAY WITH NUMBERS</div>
+  <h1>Make your next<br><span>move count.</span></h1>
+  <p class="lead">
+    Explore a polished number-selection experience. Pick a platform, set your virtual points and complete the challenge.
+  </p>
+  <div class="hero-stats">
+    <div><b>03</b><small>Spaces</small></div>
+    <div><b>06 + 04</b><small>Number challenges</small></div>
+    <div><b>100%</b><small>Entertainment only</small></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">STEP 01 / CHOOSE YOUR SPACE</div>
+      <h2>Select a platform</h2>
+    </div>
+    <span class="pill">Choose one</span>
+  </div>
+  <form method="post" action="{% url 'start_demo' %}">
+    {% csrf_token %}
+    <div class="platform-grid">
+      <label class="platform-card">
+        <input type="radio" name="platform" value="SPIN CITY" required>
+        <span class="platform-icon pink">✺</span>
+        <b>Spin City</b>
+        <small>Bright, energetic space</small>
+        <span class="choose">Select platform ↗</span>
+      </label>
+      <label class="platform-card">
+        <input type="radio" name="platform" value="MWNOS">
+        <span class="platform-icon blue">⌘</span>
+        <b>MWNOS</b>
+        <small>Explore the number challenge</small>
+        <span class="choose">Select platform ↗</span>
+      </label>
+      <label class="platform-card">
+        <input type="radio" name="platform" value="AFRICANBET">
+        <span class="platform-icon gold">✦</span>
+        <b>Africanbet</b>
+        <small>Try the interactive experience</small>
+        <span class="choose">Select platform ↗</span>
+      </label>
+    </div>
+    <button class="btn primary full">Continue <span>→</span></button>
+  </form>
+</section>
+
+<div class="notice">
+  <span>ⓘ</span>
+  <p>
+    <b>Entertainment only.</b> This site uses virtual points and practice number selections.
+    It does not connect to betting accounts, process real-money withdrawals, or request passwords or SMS codes.
+  </p>
+</div>
+{% endblock %}

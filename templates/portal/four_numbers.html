@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Four-digit challenge — LuckyLab{% endblock %}
+{% block content %}
+<div class="progress">
+  <span class="done"></span><span class="done"></span><span class="active"></span><span></span>
+</div>
+<section class="narrow panel">
+  <div class="eyebrow">STEP 03 / FOUR DIGITS</div>
+  <h1 class="page-title">Add your <span>phone &amp; four digits.</span></h1>
+  <p class="muted">Enter your phone number first, then choose four different digits from 0 to 9.</p>
+  <div class="summary"><span>Virtual points</span><b>{{ session.demo_points }} PTS</b></div>
+
+  <form method="post" action="{% url 'save_four_numbers' %}" id="numberForm">
+    {% csrf_token %}
+
+    <label class="field-label" for="phone">Phone number</label>
+    <div class="input-wrap">
+      <input id="phone" name="phone" type="tel" required placeholder="e.g. 07XXXXXXXX" autocomplete="tel">
+    </div>
+    <p class="helper">Enter a valid phone number.</p>
+
+    <div class="number-grid four" style="margin-top:22px">
+      {% for n in "1234" %}
+      <label class="number-field">
+        <span>Digit {{ forloop.counter }}</span>
+        <input name="numbers" type="text" inputmode="numeric" pattern="[0-9]" min="0" max="9" maxlength="1" required placeholder="—" autocomplete="off">
+      </label>
+      {% endfor %}
+    </div>
+    <p class="helper">Each digit must be unique (0–9 allowed).</p>
+
+    <button class="btn primary full">Save and continue <span>→</span></button>
+  </form>
+</section>
+{% endblock %}

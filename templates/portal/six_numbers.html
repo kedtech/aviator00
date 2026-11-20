@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Six-number challenge — LuckyLab{% endblock %}
+{% block content %}
+<div class="progress">
+  <span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span>
+</div>
+<section class="narrow panel">
+  <div class="eyebrow">STEP 04 / FINAL CHALLENGE</div>
+  <h1 class="page-title">Choose your <span>six numbers.</span></h1>
+  <p class="muted">Select six different numbers from 0 to 49 to finish your demo session.</p>
+  <div class="summary"><span>Four digits</span><b>{{ session.four_numbers }}</b></div>
+  <div class="summary" style="margin-top:0.5rem"><span>Phone</span><b>{{ session.phone_number }}</b></div>
+
+  <form method="post" action="{% url 'save_six_numbers' %}" id="numberForm">
+    {% csrf_token %}
+    <div class="number-grid six">
+      {% for n in "123456" %}
+      <label class="number-field">
+        <span>Number {{ forloop.counter }}</span>
+        <input name="numbers" type="text" inputmode="numeric" pattern="[0-9]*" min="0" max="49" maxlength="2" required placeholder="—" autocomplete="off">
+      </label>
+      {% endfor %}
+    </div>
+    <p class="helper">Enter six unique numbers between 0 and 49.</p>
+    <button class="btn primary full">Complete demo <span>→</span></button>
+  </form>
+</section>
+{% endblock %}

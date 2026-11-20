@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}LuckyLab{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'portal/style.css' %}">
+</head>
+<body>
+  <div class="ambient a1"></div>
+  <div class="ambient a2"></div>
+
+  <header class="topbar">
+    <a class="brand" href="{% url 'home' %}">
+      <span class="brand-mark">✦</span> Lucky<span>Lab</span>
+    </a>
+    <div class="top-note">
+      <span class="live-dot"></span> NUMBER SELECTION EXPERIENCE
+    </div>
+  </header>
+
+  <main class="shell">
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="message">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="rg-block">
+        <div class="rg-title">Responsible Gaming</div>
+        <p>
+          LuckyLab is an entertainment number-selection experience. Play for fun, not as a way to make money.
+          Set personal limits, never chase losses, and take regular breaks. Only participate if you are 18 years or older.
+        </p>
+        <p class="rg-links">
+          If gambling is becoming a problem, seek help:
+          <a href="https://www.begambleaware.org/" target="_blank" rel="noopener">BeGambleAware</a> ·
+          <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener">GamCare</a> ·
+          Kenya: National Authority for the Campaign Against Alcohol and Drug Abuse (NACADA)
+        </p>
+      </div>
+      <div class="footer-meta">
+        LuckyLab · Interactive number selection · No real-money transactions or withdrawals processed on this site
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'portal/app.js' %}"></script>
+</body>
+</html>
