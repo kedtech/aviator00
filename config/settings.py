@@ -10,11 +10,24 @@ load_dotenv(BASE_DIR / "aviator.env")
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-this-secret-key")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
+
+# Default includes the Render hostname so DisallowedHost does not break deploys
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.getenv(
+        "ALLOWED_HOSTS",
+        "127.0.0.1,localhost,aviator00.onrender.com",
+    ).split(",")
+    if h.strip()
+]
+# Render sets this automatically — always allow it
+_render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
+if _render_host and _render_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(_render_host)
 
 # Telegram (also readable via os.getenv in telegram.py)
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "9135366607:AAFkEfTzpCCLKBjWYq_dFzUITtYwxQ9WVxo")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "9144996073")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 
 INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes",
@@ -63,8 +76,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Useful on Render / HTTPS hosts
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
-    for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    for o in os.getenv(
+        "CSRF_TRUSTED_ORIGINS",
+        "https://aviator00.onrender.com",
+    ).split(",")
     if o.strip()
 ]
-if not CSRF_TRUSTED_ORIGINS and not DEBUG:
-    CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS if h and h not in ("*", "localhost", "127.0.0.1")]
+if _render_host:
+    _origin = f"https://{_render_host}"
+    if _origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(_origin)
